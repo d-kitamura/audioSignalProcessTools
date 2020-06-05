@@ -5,8 +5,10 @@ Sample MATLAB script of audio signal processing tools including short-time Fouri
 
 ## Contents
 - input [dir]:              includes test audio signals (dry source signals)
+- example_musicSpect.m:     example script that calculates MUSIC spectrum
 - example_STFTandISTFT.m:   example script that applies SNRmix, STFT, and inverse STFT
 - ISTFT.m:                  inverse short-time Fourier transform
+- musicSpect.m:             calculation of MUSIC spectrum
 - PCA.m:                    principal component analysis
 - showSpect.m:              show spectrogram
 - SNRmix.m:                 mix two signals with a desired signal-to-noise ratio
