@@ -8,7 +8,9 @@ function [musicSpect,freqAxis] = musicSpect(signal,order,fs,windowSize,fftSize,s
 % http://d-kitamura.net
 %
 % [syntax]
-%   [musicSpect,freqAxis] = musicSpect(signal,order,windowSize,shiftSize)
+%   [musicSpect,freqAxis] = musicSpect(signal,order,fs,windowSize)
+%   [musicSpect,freqAxis] = musicSpect(signal,order,fs,windowSize,fftSize)
+%   [musicSpect,freqAxis] = musicSpect(signal,order,fs,windowSize,fftSize,shiftSize)
 %
 % [inputs]
 %       signal: input signal (sigLen x 1)
@@ -28,7 +30,7 @@ if (nargin < 4)
     error('Too few input arguments.\n');
 end
 if (size(signal,2) > 1)
-    error ('"Input argument signal" must be a column vector.\n');
+    error ('Input argument signal" must be a column vector.\n');
 end
 if ~isreal(signal)
     error ('Input argument "signal" must be a real-valued vector.\n');
@@ -58,7 +60,7 @@ covMat = (shortTimeSig*shortTimeSig')/nFrames; % sample covariance matrix
 [~, ind] = sort(diag(eigVal), 'descend'); % sort eigenvalues in descending order and get sorted index
 sortEigVec = eigVec(:,ind); % sort eigenvectors (column vectors of eigVec) in descending order
 noiseEigVec = sortEigVec(:,2*order+1:end); % noise eigenvectors
-fftNoiseEigVec = abs(fft(noiseEigVec,fftSize)).^2; % power spectrum of noise eigenvectors (because the denominator of MUSIC spectrum is a sum of inner product of noise eigenvector and Fourier basis, which is equal to DFT)
+fftNoiseEigVec = abs(fft(noiseEigVec,fftSize)).^2; % power spectrum of noise eigenvectors (the denominator of MUSIC spectrum is a sum of inner product of noise eigenvector and Fourier basis, which is equal to DFT)
 musicSpect = 1./sum(fftNoiseEigVec,2); % pseudo spectrum (MUSIC spectrum)
 freqAxis = 0:fs/windowSize:fs-1/windowSize; % frequency axis
 
