@@ -41,7 +41,7 @@ if nCh > sigLen
     signal = signal';
 end
 if nCh ~= 1
-    error('estFoCepstrum only supports single-channel signal');
+    error('foCepstrum only supports single-channel signal.\n');
 end
 if (nargin < 5)
     fftSize = 2^(nextpow2(round(sigLen/2))); % default analysis length
