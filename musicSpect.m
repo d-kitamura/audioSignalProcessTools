@@ -30,7 +30,7 @@ if (nargin < 4)
     error('Too few input arguments.\n');
 end
 if (size(signal,2) > 1)
-    error ('Input argument signal" must be a column vector.\n');
+    error ('Input argument "signal" must be a column vector.\n');
 end
 if ~isreal(signal)
     error ('Input argument "signal" must be a real-valued vector.\n');
