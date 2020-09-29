@@ -30,8 +30,8 @@ function estFo = foCepstrum(signal,fs,foMin,foMax,fftSize,window)
 %
 
 [sigLen,nCh] = size(signal);
-cepMax = round(fs/foMin); % Maximum order of cepstrum for analysis
-cepMin = round(fs/foMax); % Minimum order of cepstrum for analysis
+cepMax = round(fs/foMin+1); % Maximum order of cepstrum for analysis
+cepMin = round(fs/foMax+1); % Minimum order of cepstrum for analysis
 
 % Check errors and set default values
 if (nargin < 4)
