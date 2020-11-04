@@ -48,7 +48,7 @@ P = P(:,idx);
 reducedD = D(1:dim,1:dim);
 reducedP = P(:,1:dim); 
 
-Y = reducedP'*X; % Output matrix
+Y = reducedP'*cX; % Output matrix
 Z = reducedP'; % Transformation matrix
 E = P'; % All eigenvectors
 end
