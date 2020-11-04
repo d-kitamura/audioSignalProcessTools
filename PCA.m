@@ -1,4 +1,4 @@
-function [Y,Z,E] = PCA(X,dim,centering)
+function [Y,Z,eigVal,eigVec] = PCA(X,dim,centering)
 %
 % Principal component analysis
 % This function supports both PCAs with and without data centering.
@@ -9,9 +9,9 @@ function [Y,Z,E] = PCA(X,dim,centering)
 % http://d-kitamura.net
 %
 % [syntax]
-%   [Y,Z,E] = PCA(X)
-%   [Y,Z,E] = PCA(X,dim)
-%   [Y,Z,E] = PCA(X,dim,centering)
+%   [Y,Z,eigVal,eigVec] = PCA(X)
+%   [Y,Z,eigVal,eigVec] = PCA(X,dim)
+%   [Y,Z,eigVal,eigVec] = PCA(X,dim,centering)
 %
 % [inputs]
 %          X: input data ( K (variables) x N (samples) )
@@ -21,7 +21,8 @@ function [Y,Z,E] = PCA(X,dim,centering)
 % [outputs]
 %          Y: output matrix (dim x N)
 %          Z: transformation matrix (dim x K, Y = ZX)
-%          E: all eigenvectors (K x K)
+%     eigVal: all eigenvalues (K x 1)
+%     eigVec: all eigenvectors (K x K)
 
 % Check errors and set default values
 if (nargin < 3)
@@ -50,6 +51,6 @@ reducedP = P(:,1:dim);
 
 Y = reducedP'*cX; % Output matrix
 Z = reducedP'; % Transformation matrix
-E = P'; % All eigenvectors
+eigVec = P; % All eigenvectors
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EOF %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
