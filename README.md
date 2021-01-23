@@ -6,9 +6,11 @@ Sample MATLAB script of audio signal processing tools including short-time Fouri
 ## Contents
 - input [dir]:              includes test audio signals (dry source signals)
 - example_foCepstrum.m:     example script that estimates fo (fundamental frequency) based on cepstrum analysis
+- example_foYin.m:          example script that estimates fo (fundamental frequency) based on YIN
 - example_musicSpect.m:     example script that calculates MUSIC spectrum
 - example_STFTandISTFT.m:   example script that applies SNRmix, STFT, and inverse STFT
 - foCepstrum.m:             estimate fo (fundamental frequency) based on cepstrum analysis
+- foYin.m:                  estimate fo (fundamental frequency) based on YIN
 - ISTFT.m:                  inverse short-time Fourier transform
 - musicSpect.m:             calculation of MUSIC spectrum
 - PCA.m:                    principal component analysis
