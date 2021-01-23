@@ -1,6 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Sample program for estimating Fo (fundamental frequency) based on       %
-% cepstrum analysis                                                       %
+% Sample program for estimating Fo (fundamental frequency) based on YIN   %
 %                                                                         %
 % Coded by D. Kitamura (d-kitamura@ieee.org)                              %
 %                                                                         %
