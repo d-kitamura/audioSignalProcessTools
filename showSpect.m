@@ -1,4 +1,4 @@
-function [graph,faxis,taxis] = showSpect(spectrogram,fs,shiftSize)
+function [figHdl,freqAx,timeAx] = showSpect(specgram,sampFreq,shiftSize)
 %
 % Show spectrogram from time-frequency matrix 
 % This function supports both complex and nonnegative input and both
@@ -13,58 +13,57 @@ function [graph,faxis,taxis] = showSpect(spectrogram,fs,shiftSize)
 % http://d-kitamura.net
 %
 % [syntax]
-%   [graph,faxis,taxis] = showSpect(spectrogram)
-%   [graph,faxis,taxis] = showSpect(spectrogram,fs,shiftSize)
+%   [figHdl,freqAx,timeAx] = showSpect3d(specgram)
+%   [figHdl,freqAx,timeAx] = showSpect3d(specgram,sampFreq,shiftSize)
 %
 % [inputs]
-%   spectrogram: STFT matrix ([freqs x frames] for a monaural spectrogram, 
-%                and [freqs x frames x channels] for a multichannel 
-%                spectrogram, where number of frequency bins is fs/2+1, and
-%                both complex-valued and nonnegative spectrograms are supported.)
-%            fs: sampling frequency [Hz]
-%     shiftSize: length of window shift
+%   specgram: STFT matrix ([nFreqs x nTime] for a monaural spectrogram, 
+%             and [nFreqs x nTime x channels] for a multichannel 
+%             spectrogram, where number of frequency bins is sampFreq/2+1, 
+%             and both complex-valued and nonnegative spectrograms are supported.)
+%   sampFreq: sampling frequency [Hz]
+%  shiftSize: length of window shift
 %
 % [outputs]
-%         graph: graphics handle
-%         faxis: frequency axis (1 x nbin)
-%         taxis: time axis (1 x nframe)
+%     figHdl: figure handle
+%     freqAx: frequency axis (1 x nbin)
+%     timeAx: time axis (1 x nframe)
 
 % Check errors and set default values
-[nfreqs, nframes, nch] = size(spectrogram);
-if ~isreal(spectrogram) % for complex spectrogram
-    spectrogram = real(abs(spectrogram).^2); % calculate power spectrogram
+[nFreq, nTime, nCh] = size(specgram);
+if ~isreal(specgram) % for complex spectrogram
+    specgram = real(abs(specgram).^2); % calculate power spectrogram
 end
 if (nargin < 2)
-    faxis = 1:nfreqs;
-    taxis = 1:nframes;
+    freqAx = 1:nFreq;
+    timeAx = 1:nTime;
 elseif (nargin < 3)
-    error('Too few input arguments.\nIf you input fs, shiftSise is also required.\n');
+    error('Too few input arguments.\nIf you input sampFreq, shiftSise is also required.\n');
 else
-    faxis = 0:fs/(2*nfreqs):fs/2 - (fs/(2*nfreqs));
-    taxis = 0:shiftSize/fs:(shiftSize/fs)*(nframes-1);
+    freqAx = linspace(0, sampFreq/2, nFreq);
+    timeAx = linspace(0, shiftSize/sampFreq*nTime, nTime);
 end
 
 % Draw spectrogram surface
-logSpectrogram = 10*log10( spectrogram );
-minVal = min( min( min( logSpectrogram ) ) );
-maxVal = max( max( max( logSpectrogram ) ) );
-for ch = 1:nch
-    graph(ch) = figure;
-    surf( taxis, faxis, 10*log10(spectrogram(:,:,ch)), 'edgecolor', 'none' );
-    axis tight;
-    box on;
-    caxis( [(minVal - maxVal)/6, maxVal] ); % moderately define color map range
-    view( 0, 90 );
-    set( gca, 'FontName', 'Times', 'FontSize', 16 );
-    if nch ~= 1
-        title( sprintf('%dch spectrogram',ch), 'FontName', 'Arial', 'FontSize', 16 );
+logSpecgram = 10*log10(specgram);
+minVal = min(min(min(logSpecgram)));
+maxVal = max(max(max(logSpecgram)));
+for iCh = 1:nCh
+    figHdl(iCh) = figure;
+    imagesc(timeAx, freqAx, 10*log10(specgram(:,:,iCh)));
+    axis tight; box on;
+    caxis([(minVal - maxVal)/6, maxVal]); % moderately define color map range
+    set(gca, 'YDir', 'normal'); % inverte virtical axis
+    set(gca, 'FontName', 'Times', 'FontSize', 16);
+    if nCh ~= 1
+        title( sprintf('%dch spectrogram',iCh), 'FontName', 'Arial', 'FontSize', 16 );
     end
     if (nargin < 2)
-        xlabel( 'Time frame', 'FontName', 'Arial', 'FontSize', 16 );
-        ylabel( 'Frequency bin', 'FontName', 'Arial', 'FontSize', 16 );
+        xlabel('Time frame', 'FontName', 'Arial', 'FontSize', 16);
+        ylabel('Frequency bin', 'FontName', 'Arial', 'FontSize', 16);
     else
-        xlabel( 'Time [s]', 'FontName', 'Arial', 'FontSize', 16 );
-        ylabel( 'Frequency [Hz]', 'FontName', 'Arial', 'FontSize', 16 );
+        xlabel('Time [s]', 'FontName', 'Arial', 'FontSize', 16);
+        ylabel('Frequency [Hz]', 'FontName', 'Arial', 'FontSize', 16);
     end
 end
 end
