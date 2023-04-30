@@ -31,9 +31,9 @@ winType = 'hamming';
 [X,analyWin,orgLenX] = STFT(x,fftSize,shiftSize,winType);
 
 % Show spectrograms
-showSpectLite(S1,fs,shiftSize);
-showSpectLite(S2,fs,shiftSize);
-showSpectLite(X,fs,shiftSize);
+showSpect(S1,fs,shiftSize);
+showSpect(S2,fs,shiftSize);
+showSpect(X,fs,shiftSize);
 
 % Apply inverse STFT (ISTFT)
 y1 = ISTFT(S1,shiftSize,analyWin,orgLen1);
